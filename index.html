@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+    <svg width="800" height="600"></svg>
+    <script>
+        const nodes = [
+            {id: "user1@example.com"}, {id: "user2@example.com"}, {id: "user3@example.com"}
+        ];
+        const links = [
+            {source: "user1@example.com", target: "user2@example.com"},
+            {source: "user2@example.com", target: "user3@example.com"}
+        ];
+
+        const svg = d3.select("svg");
+        const simulation = d3.forceSimulation(nodes)
+            .force("link", d3.forceLink(links).id(d => d.id))
+            .force("charge", d3.forceManyBody())
+            .force("center", d3.forceCenter(400, 300));
+
+        const link = svg.append("g")
+            .selectAll("line")
+            .data(links)
+            .join("line")
+            .attr("stroke", "black");
+
+        const node = svg.append("g")
+            .selectAll("circle")
+            .data(nodes)
+            .join("circle")
+            .attr("r", 10)
+            .attr("fill", "blue");
+
+        simulation.on("tick", () => {
+            link.attr("x1", d => d.source.x)
+                .attr("y1", d => d.source.y)
+                .attr("x2", d => d.target.x)
+                .attr("y2", d => d.target.y);
+
+            node.attr("cx", d => d.x)
+                .attr("cy", d => d.y);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+Flask==2.1.2
+scapy==2.4.5
+networkx==2.8.8
+scikit-learn==1.2.1
+matplotlib==3.5.2
+pandas==1.4.3
